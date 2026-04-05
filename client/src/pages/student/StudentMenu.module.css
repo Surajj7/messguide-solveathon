@@ -1,0 +1,161 @@
+.page {
+  padding-top: 0.25rem;
+}
+
+.pageHead {
+  margin-bottom: 0.75rem;
+}
+
+.pageHead h1 {
+  margin-bottom: 0.35rem;
+}
+
+.sourceLine {
+  margin: 0 0 1rem;
+}
+
+.mealsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1100px) {
+  .mealsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .mealsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mealBlock {
+  padding: 0.95rem 1.05rem;
+  border-left: 4px solid var(--accent);
+  min-height: 100%;
+  margin: 0;
+}
+
+.mealHead {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.35rem;
+}
+
+.mealHead h2 {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 1.02rem;
+}
+
+.mealIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--accent-soft), #fff);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  align-items: flex-start;
+  transition: background 0.18s ease;
+  border-radius: 10px;
+  margin: 0 -0.25rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+.row:hover {
+  background: var(--surface-2, #f8faf9);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowMain {
+  min-width: 0;
+  flex: 1;
+}
+
+.nameRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.macros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.macros span {
+  padding: 0.12rem 0.4rem;
+  border-radius: 6px;
+  background: var(--surface-2, #f1f5f3);
+}
+
+.calWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.cal {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.calLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  margin-right: 0.3rem;
+  margin-top: 0.28rem;
+}

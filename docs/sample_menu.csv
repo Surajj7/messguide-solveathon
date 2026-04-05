@@ -1,0 +1,6 @@
+item_name,calories,protein_g,carbs_g,fats_g,tags,is_veg,mess_type,meal_slot,day_of_week,sort_order
+"Oats Porridge",220,8,38,4,"veg,high protein",true,VEG,BREAKFAST,1,0
+"Upma",250,6,40,8,"veg",true,VEG,BREAKFAST,1,1
+"Grilled Chicken Sandwich",340,26,28,12,"non-veg,high protein",false,NON_VEG,LUNCH,2,0
+"Rajma Rice",420,14,68,10,"veg,high protein",true,VEG,LUNCH,2,0
+"Feast Paneer Tikka",310,22,12,20,"veg,feast",true,VEG,FEAST,5,0

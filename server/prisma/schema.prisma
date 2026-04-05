@@ -1,0 +1,560 @@
+// Smart Mess Menu — PostgreSQL schema (Prisma)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  MESS_INCHARGE
+  ADMIN
+}
+
+enum MessType {
+  VEG
+  NON_VEG
+  SPECIAL
+}
+
+enum HostelBlock {
+  A
+  B
+  C
+  D1
+  D2
+  E
+}
+
+enum Caterer {
+  ZENITH
+  SRRC
+  GRACE
+  RASSENCE
+  PROODLE
+  FUSION
+}
+
+enum HealthGoal {
+  WEIGHT_LOSS
+  MUSCLE_GAIN
+  MAINTENANCE
+  HIGH_PROTEIN
+  BALANCED
+}
+
+enum MealSlot {
+  BREAKFAST
+  LUNCH
+  SNACKS
+  DINNER
+  FEAST
+  NIGHT_MESS
+}
+
+enum ComplaintType {
+  TOO_OILY
+  TOO_SPICY
+  POOR_QUALITY
+  UNDERCOOKED
+  NOT_HYGIENIC
+  QUANTITY_ISSUE
+  OTHER
+}
+
+enum ComplaintStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+}
+
+enum CrowdLevel {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_CROWDED
+}
+
+enum SuggestionCategory {
+  BREAKFAST
+  LUNCH
+  DINNER
+  FEAST
+  NIGHT_CANTEEN
+}
+
+enum NotificationType {
+  MENU_CHANGE
+  CROWD
+  ANNOUNCEMENT
+  COMPLAINT
+  FEAST
+  NIGHT_MESS
+  ESCALATION
+  ADVANCED_REQUEST
+  MESS_CATERER_SWAP
+  MESS_UPGRADE
+  MEAL_CLOSING_SOON
+  MISSED_MEALS_STREAK
+  ATTENDANCE_CONFIRMED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+}
+
+enum AttendanceMethod {
+  OTP
+  QR_SCAN
+  AUTO_ABSENT
+}
+
+enum AdvancedRequestType {
+  ROOM_DELIVERY
+  TEMP_MENU_CHANGE
+}
+
+enum AdvancedRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum CatererSwapRequestStatus {
+  CONFIRMED
+  CANCELLED
+  REJECTED
+}
+
+enum MessUpgradeRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum PreferenceMenuType {
+  REGULAR
+  FEAST
+}
+
+enum WhatsAppSendStatus {
+  MOCKED
+  PENDING
+  FAILED
+  SENT
+}
+
+model CalorieEntry {
+  id         String    @id @default(uuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logDate    DateTime  @db.Date
+  calories   Float
+  label      String?
+  menuItemId String?
+  menuItem   MenuItem? @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, logDate])
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         UserRole
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  calorieEntries CalorieEntry[]
+  studentProfile StudentProfile?
+  reviews        Review[]
+  complaints     Complaint[]
+  suggestions    Suggestion[]
+  suggestionVotes SuggestionVote[]
+  notifications  Notification[]
+  crowdUpdates   CrowdStatus[]
+  communityPosts CommunityPost[]
+  comments       CommunityComment[]
+  postLikes      CommunityPostLike[]
+  mealPreferences MealPreference[]
+  announcements  Announcement[] @relation("AnnouncementAuthor")
+  advancedRequests AdvancedRequest[]
+  reviewedAdvancedRequests AdvancedRequest[] @relation("AdvancedRequestReviewer")
+  catererSwapRequests    CatererSwapRequest[]
+  messUpgradeRequests    MessUpgradeRequest[]
+  reviewedMessUpgrades   MessUpgradeRequest[] @relation("MessUpgradeReviewer")
+  mealAttendanceRows     MealAttendance[]      @relation("AttendanceStudent")
+  mealAttendanceMarked   MealAttendance[]      @relation("AttendanceMarkedBy")
+  mealAttendanceOtps     MealAttendanceOtp[]
+}
+
+model StudentProfile {
+  id              String      @id @default(uuid())
+  userId          String      @unique
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messType        MessType
+  hostelBlock     HostelBlock
+  caterer         Caterer
+  registrationNo  String?     @unique
+  parentPhone     String?
+  parentEmail     String?
+  wardenEmail     String?
+  healthGoal             HealthGoal  @default(BALANCED)
+  profileComplete        Boolean     @default(false)
+  consecutiveMissedMeals Int         @default(0)
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+}
+
+model MenuItem {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  calories    Float    @default(0)
+  proteinG    Float    @default(0)
+  carbsG      Float    @default(0)
+  fatsG       Float    @default(0)
+  tags        String   @default("[]")
+  isVeg       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  templateEntries MenuTemplateEntry[]
+  dateEntries     MenuDateEntry[]
+  reviews         Review[]
+  complaints      Complaint[]
+  calorieEntries  CalorieEntry[]
+  leftoverEntries LeftoverEntry[]
+}
+
+model MenuTemplateEntry {
+  id          String   @id @default(uuid())
+  dayOfWeek   Int
+  messType    MessType
+  mealSlot    MealSlot
+  menuItemId  String
+  menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  sortOrder   Int      @default(0)
+
+  @@index([dayOfWeek, messType, mealSlot])
+}
+
+model MenuDateEntry {
+  id          String   @id @default(uuid())
+  menuDate    DateTime @db.Date
+  messType    MessType
+  mealSlot    MealSlot
+  menuItemId  String
+  menuItem    MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  sortOrder   Int      @default(0)
+
+  @@index([menuDate, messType, mealSlot])
+}
+
+model Review {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuItemId     String
+  menuItem       MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  menuDate       DateTime @db.Date
+  rating         Int
+  comment        String?  @db.Text
+  attachmentPath String?
+  createdAt      DateTime @default(now())
+
+  @@index([menuItemId, menuDate])
+  @@index([userId])
+}
+
+model Complaint {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuItemId     String
+  menuItem       MenuItem        @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  menuDate       DateTime        @db.Date
+  issueType      ComplaintType
+  description    String?         @db.Text
+  attachmentPath String?
+  status         ComplaintStatus @default(OPEN)
+  escalated      Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([menuDate, escalated])
+  @@index([menuItemId])
+}
+
+model Suggestion {
+  id          String              @id @default(uuid())
+  userId      String
+  user        User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text        String              @db.Text
+  category    SuggestionCategory?
+  upvoteCount Int                 @default(0)
+  createdAt   DateTime            @default(now())
+
+  votes SuggestionVote[]
+}
+
+model SuggestionVote {
+  id           String     @id @default(uuid())
+  suggestionId String
+  suggestion   Suggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([suggestionId, userId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  message   String           @db.Text
+  read      Boolean          @default(false)
+  metadata  String?          @db.Text
+  createdAt DateTime         @default(now())
+
+  @@index([userId, read])
+}
+
+model CrowdStatus {
+  id        String      @id @default(uuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  level     CrowdLevel
+  note      String?
+  createdAt DateTime    @default(now())
+}
+
+model LeftoverEntry {
+  id          String    @id @default(uuid())
+  entryDate   DateTime  @db.Date
+  mealSlot    MealSlot
+  menuItemId  String?
+  menuItem    MenuItem? @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  itemName    String
+  quantity    Float
+  unit        String
+  messType    MessType?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([entryDate, mealSlot])
+  @@index([menuItemId, entryDate])
+}
+
+model NightMessItem {
+  id           String   @id @default(uuid())
+  serviceDate  DateTime @db.Date
+  name         String
+  price        Float
+  availableQty Int
+  remainingQty Int
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  @@unique([serviceDate, name])
+  @@index([serviceDate])
+}
+
+model CommunityPost {
+  id             String   @id @default(uuid())
+  authorId       String
+  author         User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content        String   @db.Text
+  tags           String   @default("[]")
+  attachmentPath String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  comments CommunityComment[]
+  likes    CommunityPostLike[]
+}
+
+model CommunityComment {
+  id        String        @id @default(uuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String        @db.Text
+  createdAt DateTime      @default(now())
+}
+
+model CommunityPostLike {
+  id        String        @id @default(uuid())
+  postId    String
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+
+  @@unique([postId, userId])
+}
+
+model MealPreference {
+  id        String             @id @default(uuid())
+  userId    String
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  forDate   DateTime           @db.Date
+  menuType  PreferenceMenuType
+  notes     String?            @db.Text
+  createdAt DateTime           @default(now())
+
+  @@index([forDate, userId])
+}
+
+model AIReport {
+  id          String   @id @default(uuid())
+  month       Int
+  year        Int
+  summaryText String   @db.Text
+  pdfBytes    Bytes?
+  createdAt   DateTime @default(now())
+  createdById String?
+
+  @@index([year, month])
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  authorId  String
+  author    User     @relation("AnnouncementAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  title     String
+  body      String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model WhatsAppTemplate {
+  id        String   @id @default(uuid())
+  name      String
+  body      String   @db.Text
+  createdAt DateTime @default(now())
+  sends     WhatsAppNotification[]
+}
+
+model WhatsAppNotification {
+  id               String              @id @default(uuid())
+  templateId       String?
+  template         WhatsAppTemplate?   @relation(fields: [templateId], references: [id])
+  recipientSummary String              @db.Text
+  messageBody      String              @db.Text
+  status           WhatsAppSendStatus  @default(MOCKED)
+  createdById      String?
+  createdAt        DateTime            @default(now())
+}
+
+model AdvancedRequest {
+  id            String                @id @default(uuid())
+  userId        String
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requestDate   DateTime              @db.Date
+  requestType   AdvancedRequestType
+  description   String                @db.Text
+  proofPath     String?
+  status        AdvancedRequestStatus @default(PENDING)
+  reviewedById  String?
+  reviewedBy    User?                 @relation("AdvancedRequestReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt    DateTime?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  @@index([status, createdAt])
+  @@index([userId])
+}
+
+model CatererSwapOption {
+  id          String   @id @default(uuid())
+  messType    MessType
+  fromCaterer Caterer
+  toCaterer   Caterer
+  totalSlots  Int
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  requests CatererSwapRequest[]
+
+  @@unique([messType, fromCaterer, toCaterer])
+  @@index([messType, isActive])
+}
+
+model CatererSwapRequest {
+  id                  String                   @id @default(uuid())
+  userId              String
+  user                User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  optionId            String
+  option              CatererSwapOption        @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  status              CatererSwapRequestStatus @default(CONFIRMED)
+  messTypeSnapshot    MessType
+  fromCatererSnapshot Caterer
+  toCatererSnapshot   Caterer
+  adminNote           String?                  @db.Text
+  createdAt           DateTime                 @default(now())
+
+  @@index([userId, createdAt])
+  @@index([optionId, status])
+}
+
+model MessUpgradeRequest {
+  id             String                   @id @default(uuid())
+  userId         String
+  user           User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targetMessType MessType
+  paymentId      String
+  status         MessUpgradeRequestStatus @default(PENDING)
+  assignedCaterer Caterer?
+  adminRemarks   String?                  @db.Text
+  reviewedById   String?
+  reviewedBy     User?                    @relation("MessUpgradeReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt     DateTime?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+
+  @@index([userId, status])
+  @@index([status, createdAt])
+}
+
+model MealAttendanceOtp {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logDate   DateTime  @db.Date
+  mealSlot  MealSlot
+  code      String
+  expiresAt DateTime
+  used      Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, logDate, mealSlot])
+  @@index([code, logDate])
+  @@index([expiresAt])
+}
+
+model MealAttendance {
+  id             String             @id @default(uuid())
+  userId         String
+  user           User               @relation("AttendanceStudent", fields: [userId], references: [id], onDelete: Cascade)
+  logDate        DateTime           @db.Date
+  mealSlot       MealSlot
+  status         AttendanceStatus
+  method         AttendanceMethod
+  markedAt       DateTime           @default(now())
+  markedByUserId String?
+  markedBy       User?              @relation("AttendanceMarkedBy", fields: [markedByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, logDate, mealSlot])
+  @@index([logDate, mealSlot, status])
+}

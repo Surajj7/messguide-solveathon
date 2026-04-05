@@ -1,0 +1,48 @@
+.panel {
+  border-radius: 20px;
+  padding: 1.15rem 1.2rem;
+  background: linear-gradient(160deg, #f8faf9 0%, #e8f5e9 55%, #fff 100%);
+  border: 1px solid rgba(45, 106, 79, 0.2);
+  box-shadow: 0 10px 36px rgba(27, 67, 50, 0.08);
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0.25rem 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.qrWrap {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 0.75rem;
+}
+
+.qrSvg {
+  width: 160px;
+  height: 160px;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.note strong {
+  color: var(--text);
+}

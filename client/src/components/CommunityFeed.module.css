@@ -1,0 +1,163 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tagLbl {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.toolbarWide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1rem;
+}
+
+@media (min-width: 560px) {
+  .toolbarWide {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.metaRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.metaLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.authorEmail {
+  font-size: 0.72rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.likeBtn {
+  color: #c62828;
+  border-color: rgba(198, 40, 40, 0.4);
+  background: linear-gradient(180deg, #ffebee 0%, #fff 100%);
+}
+
+.likeBtn:hover:not(:disabled) {
+  border-color: #c62828;
+  color: #b71c1c;
+}
+
+.comments {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+}
+
+.attachWrap {
+  margin: 0.5rem 0;
+}
+
+.attachImg {
+  max-width: 100%;
+  max-height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.attachLink {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.cmt {
+  font-size: 0.88rem;
+  margin-bottom: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cmtBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.modDeleteSmall {
+  flex-shrink: 0;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--danger, #c1121f);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.modDeleteSmall:hover {
+  background: #ffebee;
+}
+
+.postDelete {
+  flex-shrink: 0;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--danger, #c1121f);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.postDelete:hover {
+  background: #ffebee;
+}
+
+.staffNote {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: var(--accent-soft, #e8f5e9);
+  border: 1px solid var(--border);
+}

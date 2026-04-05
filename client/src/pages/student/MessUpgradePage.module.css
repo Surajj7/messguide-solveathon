@@ -1,0 +1,54 @@
+.h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+@media (max-width: 840px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form {
+  margin: 0;
+}
+
+.formTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.currentLine {
+  margin: 0 0 1rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.err {
+  color: var(--danger, #c62828);
+  font-size: 0.88rem;
+  margin: 0.5rem 0 0;
+}
+
+.ok {
+  color: var(--accent, #2d6a4f);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+}

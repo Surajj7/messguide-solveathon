@@ -1,0 +1,35 @@
+.form {
+  margin: 0;
+}
+
+.title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.otpInput {
+  font-size: 1.35rem;
+  letter-spacing: 0.2em;
+  text-align: center;
+  font-weight: 800;
+}
+
+.ok {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.err {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  background: #ffebee;
+  color: #b71c1c;
+  font-size: 0.85rem;
+}

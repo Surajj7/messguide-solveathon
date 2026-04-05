@@ -1,0 +1,233 @@
+.wrap {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem 2.5rem;
+  background: transparent;
+  animation: loginPageIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes loginPageIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.backHome {
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.backHome:hover {
+  opacity: 0.85;
+  transform: translateX(-2px);
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: calc(var(--radius) + 6px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 8px 32px rgba(15, 31, 23, 0.08),
+    0 32px 64px rgba(15, 31, 23, 0.06);
+  backdrop-filter: blur(20px) saturate(1.05);
+  -webkit-backdrop-filter: blur(20px) saturate(1.05);
+  padding: 1.5rem 1.35rem 1.65rem;
+  transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: loginCardIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+
+@keyframes loginCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap,
+  .card {
+    animation: none;
+  }
+}
+
+.card:hover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 12px 40px rgba(15, 31, 23, 0.1),
+    0 40px 80px rgba(27, 111, 82, 0.06);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: clamp(2.2rem, 8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  background: linear-gradient(135deg, #0f291c 0%, var(--accent) 48%, #2d9f6c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@supports not (background-clip: text) {
+  .heroTitle {
+    color: var(--accent);
+    background: none;
+  }
+}
+
+.tagline {
+  margin: 0.55rem 0 0;
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.sub {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.code {
+  font-size: 0.82em;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.12rem 0.4rem;
+  border-radius: 8px;
+}
+
+.sectionLabel {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.55rem;
+  text-align: center;
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  margin-bottom: 1.2rem;
+}
+
+@media (min-width: 400px) {
+  .roleGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.9rem 0.4rem;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+  font: inherit;
+  color: inherit;
+}
+
+.roleCard:hover {
+  border-color: var(--accent-muted);
+  box-shadow: var(--shadow);
+}
+
+.roleCard:active {
+  transform: scale(0.98);
+}
+
+.roleCardActive {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft) 0%, #fff 100%);
+  box-shadow: 0 0 0 1px rgba(27, 111, 82, 0.12);
+}
+
+.roleIconWrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: var(--surface-2, #f4f7f5);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.roleCardActive .roleIconWrap {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(27, 111, 82, 0.12);
+}
+
+.roleIcon {
+  width: 26px;
+  height: 26px;
+  color: var(--accent);
+}
+
+.roleTitle {
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.roleSub {
+  font-size: 0.64rem;
+  color: var(--muted);
+  margin-top: 0.22rem;
+  line-height: 1.25;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form .input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--surface-2);
+}

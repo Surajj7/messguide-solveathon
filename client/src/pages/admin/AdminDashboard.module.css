@@ -1,0 +1,248 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0.35rem 1rem 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding-bottom: 2rem;
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+
+.stats .card {
+  text-align: center;
+  padding: 1rem 0.85rem;
+  margin-bottom: 0;
+  border-radius: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stats .card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover, 0 12px 40px rgba(15, 31, 23, 0.1));
+}
+
+.stats .card .muted {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stats .card strong {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+
+@media (min-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.form {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.userRow {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.complaintCard {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.complaintCard:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.complaintHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.complaintBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.complaintEscalated {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.complaintMeta {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.complaintDescLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.complaintDesc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 0.65rem 0.75rem;
+  background: #f6f8f7;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.fieldLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted, #555);
+  margin-top: 0.25rem;
+}
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.checkRow input {
+  margin-top: 0.2rem;
+}
+
+.pre {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: #f6f7f8;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  overflow: auto;
+  max-height: 280px;
+}
+
+.communityTabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.commTab,
+.commTabOn {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.commTabOn {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.modList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 560px) {
+  .modItem {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.modBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.modText {
+  margin: 0 0 0.35rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.modMeta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.modContext {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.modSnippet {
+  font-style: italic;
+}
+
+.modDelete {
+  flex-shrink: 0;
+  align-self: flex-start;
+  background: #fff;
+  color: var(--danger, #c62828);
+  border: 1px solid rgba(193, 18, 31, 0.35);
+  font-size: 0.82rem;
+  padding: 0.45rem 0.75rem;
+}
+
+.modDelete:hover {
+  background: #fff5f5;
+}

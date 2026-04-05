@@ -1,0 +1,14 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+.env
+.env.*
+!.env.example
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db
+server/uploads/*
+!server/uploads/.gitkeep
+nutriguide2v/

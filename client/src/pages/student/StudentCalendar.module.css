@@ -1,0 +1,50 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.month {
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.dow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 0.25rem;
+}
+
+.day {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.daySel {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.link {
+  display: block;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+}
+
+.link:last-child {
+  border-bottom: none;
+}

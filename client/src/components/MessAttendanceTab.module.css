@@ -1,0 +1,64 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scanCard,
+.form {
+  margin: 0;
+}
+
+.cameraOff {
+  padding: 0.5rem 0;
+}
+
+.subh {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.reader {
+  min-height: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+}
+
+.ok {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.err {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: #ffebee;
+  color: #b71c1c;
+  font-size: 0.88rem;
+  margin: 0;
+}

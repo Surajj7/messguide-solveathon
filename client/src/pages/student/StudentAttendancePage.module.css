@@ -1,0 +1,126 @@
+.page {
+  padding-bottom: 2rem;
+}
+
+.title {
+  margin: 0.35rem 0 0.35rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+
+.pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-soft, #e8f5e9);
+  color: var(--accent, #2d6a4f);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  margin: 0;
+}
+
+.h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.qrBox {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem;
+  background: #fff;
+  border-radius: 16px;
+  margin-top: 0.5rem;
+}
+
+.err {
+  color: var(--danger, #c62828);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.otpShow {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.otpDigits {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent, #2d6a4f);
+}
+
+.slotList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.slotRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.slotRow:last-child {
+  border-bottom: none;
+}
+
+.slotName {
+  font-weight: 700;
+}
+
+.tagOk {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+}
+
+.tagBad {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #c62828;
+  background: #ffebee;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+}
+
+.tagPending {
+  font-size: 0.72rem;
+  color: var(--muted);
+}

@@ -1,0 +1,109 @@
+.h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.err {
+  color: var(--danger, #c62828);
+  font-size: 0.88rem;
+}
+
+.ok {
+  color: var(--accent, #2d6a4f);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.current {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.mutedLabel {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.empty {
+  margin-bottom: 1rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.optionCard {
+  margin: 0;
+  transition: box-shadow 0.2s ease;
+}
+
+.optionCard:hover {
+  box-shadow: 0 10px 28px rgba(45, 106, 79, 0.1);
+}
+
+.optionTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.swapLine {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.slotPill {
+  text-align: right;
+  padding: 0.35rem 0.65rem;
+  border-radius: 12px;
+  background: var(--accent-soft, #e8f5e9);
+}
+
+.slotNum {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--accent, #2d6a4f);
+  line-height: 1.1;
+}
+
+.slotLab {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.slotMeta {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.warn {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #e65100;
+}

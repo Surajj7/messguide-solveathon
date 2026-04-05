@@ -1,0 +1,117 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formTitle {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.form {
+  margin: 0;
+}
+
+.err {
+  color: var(--danger, #c62828);
+  font-size: 0.88rem;
+  margin: 0.5rem 0 0;
+}
+
+.ok {
+  color: var(--accent, #2d6a4f);
+  font-size: 0.88rem;
+  margin: 0.5rem 0 0;
+}
+
+.listSection {
+  margin: 0;
+}
+
+.listTitle {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.65rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.listCard {
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+.listTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.typePill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  background: var(--accent-soft, #e8f5e9);
+  color: var(--accent, #2d6a4f);
+}
+
+.statusPending {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.statusOk {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.statusBad {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  background: #ffebee;
+  color: #c62828;
+}
+
+.listDate {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.listDesc {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.proofLink {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}

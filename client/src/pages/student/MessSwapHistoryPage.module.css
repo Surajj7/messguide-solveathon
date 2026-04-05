@@ -1,0 +1,61 @@
+.h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.section {
+  margin-top: 1.35rem;
+}
+
+.secTitle {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.card {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.main {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.code {
+  font-size: 0.8rem;
+  background: var(--surface-2, #f0f4f2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+}
+
+.remark {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}

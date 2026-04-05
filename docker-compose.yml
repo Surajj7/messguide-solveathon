@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mess_menu
+    ports:
+      - "5432:5432"
+    volumes:
+      - mess_pg:/var/lib/postgresql/data
+
+volumes:
+  mess_pg:

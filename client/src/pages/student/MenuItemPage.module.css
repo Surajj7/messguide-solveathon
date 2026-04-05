@@ -1,0 +1,146 @@
+.page {
+  padding-top: 0.15rem;
+}
+
+.dishHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.dishHeader h1 {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.nutritionCard {
+  padding: 1rem 1.1rem 1.05rem;
+}
+
+.nutritionLabel {
+  margin: 0 0 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.macroGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 520px) {
+  .macroGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .macroKcal {
+    grid-column: span 1;
+  }
+}
+
+.macroCell {
+  text-align: center;
+  padding: 0.65rem 0.5rem;
+  border-radius: 12px;
+  background: var(--surface-2, #f4f7f5);
+  border: 1px solid var(--border);
+}
+
+.macroKcal {
+  background: linear-gradient(145deg, var(--accent-soft), #fff);
+  border-color: rgba(27, 111, 82, 0.2);
+}
+
+.macroValue {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.macroKcal .macroValue {
+  color: var(--accent);
+  font-size: 1.35rem;
+}
+
+.macroUnit {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+
+.starRow {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+}
+
+.starBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: var(--surface-2, #f4f7f5);
+  font-size: 1.85rem;
+  line-height: 1;
+  color: var(--border);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    transform 0.12s ease,
+    background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.starBtn:hover {
+  background: #fff8e6;
+}
+
+.starBtn:active {
+  transform: scale(0.94);
+}
+
+.starOn {
+  color: var(--gold, #c9a227);
+  background: #fffbeb;
+  text-shadow: 0 1px 0 rgba(60, 40, 20, 0.1);
+}
+
+.starBtn:not(.starOn) {
+  color: #d4c9b8;
+}

@@ -1,0 +1,76 @@
+.dateRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.dateRow .input {
+  max-width: 12rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.card {
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 0.85rem;
+  background: var(--card-bg, #fff);
+}
+
+.cardMuted {
+  opacity: 0.72;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.dish {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent, #2d6a4f);
+  margin-top: 0.2rem;
+}
+
+.badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sold {
+  color: var(--danger, #c62828);
+}
+
+.low {
+  color: #b08900;
+}
+
+.ok {
+  color: var(--accent, #2d6a4f);
+}
+
+.na {
+  color: var(--muted, #64748b);
+}
+
+.extrasHeading {
+  font-size: 1.05rem;
+  margin: 1.25rem 0 0;
+}

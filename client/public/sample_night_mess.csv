@@ -1,0 +1,2 @@
+item_name,calories,protein_g,carbs_g,fats_g,tags,is_veg,mess_type,meal_slot,service_date,price,available_qty,remaining_qty
+"Veg fried rice",350,8,55,10,"veg",true,VEG,NIGHT_MESS,2026-04-03,80,40,40

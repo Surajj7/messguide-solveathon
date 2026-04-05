@@ -1,0 +1,28 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.unread {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
