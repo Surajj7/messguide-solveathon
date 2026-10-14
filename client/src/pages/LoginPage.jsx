@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoRestaurantOutline, IoShieldCheckmarkOutline, IoSchoolOutline } from "react-icons/io5";
+import {
+  IoRestaurantOutline,
+  IoShieldCheckmarkOutline,
+  IoSchoolOutline,
+  IoPeopleOutline,
+} from "react-icons/io5";
 import { useAuth } from "../context/AuthContext.jsx";
 import styles from "./LoginPage.module.css";
 
@@ -9,8 +14,15 @@ const ROLE = {
     key: "student",
     label: "Student",
     sub: "Menu, AI & community",
-    email: "student1@vitstudent.ac.in",
+    email: "student.veg@vitstudent.ac.in",
     Icon: IoSchoolOutline,
+  },
+  parent: {
+    key: "parent",
+    label: "Parent",
+    sub: "Ward attendance & feedback",
+    email: "parent1@vitparent.ac.in",
+    Icon: IoPeopleOutline,
   },
   mess: {
     key: "mess",
@@ -47,7 +59,7 @@ export default function LoginPage() {
   async function onSubmit(e) {
     e.preventDefault();
     if (!portal) {
-      setErr("Choose Student, Mess, or Admin first.");
+      setErr("Choose Student, Parent, Mess, or Admin first.");
       return;
     }
     setErr("");
@@ -56,6 +68,8 @@ export default function LoginPage() {
       const u = await login(email, password);
       if (u.role === "STUDENT") {
         nav("/app", { replace: true });
+      } else if (u.role === "PARENT") {
+        nav("/parent", { replace: true });
       } else if (u.role === "MESS_INCHARGE") {
         nav("/mess", { replace: true });
       } else {

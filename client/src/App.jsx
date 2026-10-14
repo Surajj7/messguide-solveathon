@@ -24,6 +24,7 @@ import MessSwapHistoryPage from "./pages/student/MessSwapHistoryPage.jsx";
 import StudentAttendancePage from "./pages/student/StudentAttendancePage.jsx";
 import MessDashboard from "./pages/mess/MessDashboard.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import ParentDashboard from "./pages/parent/ParentDashboard.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 
 function PrivateRoute({ children, roles }) {
@@ -67,6 +68,8 @@ export default function App() {
               <Navigate to="/app" replace />
             ) : user.role === "MESS_INCHARGE" ? (
               <Navigate to="/mess" replace />
+            ) : user.role === "PARENT" ? (
+              <Navigate to="/parent" replace />
             ) : (
               <Navigate to="/admin" replace />
             )
@@ -105,6 +108,15 @@ export default function App() {
         </Route>
         <Route path="attendance" element={<StudentAttendancePage />} />
       </Route>
+
+      <Route
+        path="/parent/*"
+        element={
+          <PrivateRoute roles={["PARENT"]}>
+            <ParentDashboard />
+          </PrivateRoute>
+        }
+      />
 
       <Route
         path="/mess/*"

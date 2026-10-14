@@ -92,6 +92,7 @@ export default function MessDashboard() {
   const nav = useNavigate();
   const [tab, setTab] = useState("import");
   const [csvFile, setCsvFile] = useState(null);
+  const [targetMessType, setTargetMessType] = useState("ALL");
   const [importResult, setImportResult] = useState(null);
   const [importError, setImportError] = useState(null);
   const [importLoading, setImportLoading] = useState(false);
@@ -233,13 +234,14 @@ export default function MessDashboard() {
     e.preventDefault();
     setImportError(null);
     if (!csvFile) {
-      setImportError("Choose a CSV file first (use the file picker above).");
+      setImportError("Choose an Excel or CSV file first (use the file picker above).");
       return;
     }
     setImportLoading(true);
     try {
       const fd = new FormData();
       fd.append("file", csvFile);
+      if (targetMessType) fd.append("targetMessType", targetMessType);
       const { data } = await api.post("/import/csv", fd);
       setImportResult(data);
     } catch (err) {
@@ -395,28 +397,60 @@ export default function MessDashboard() {
       <div className={styles.page}>
       {tab === "import" && (
         <section className="card">
-          <h2>CSV import</h2>
+          <h2>Menu Excel &amp; CSV Import</h2>
           <p className="muted" style={{ fontSize: "0.88rem" }}>
-            See <code>docs/sample_menu.csv</code> for column format. Upload replaces nothing — appends
-            rows. Night mess has its own CSV below.
+            Upload your weekly or daily menu. Supports <strong>4-meals matrix format</strong> (each day as a row, with <strong>Breakfast, Lunch, Snacks, Dinner</strong> as columns). Both <code>.xlsx</code> and <code>.csv</code> files are supported!
           </p>
+          <div style={{ display: "flex", gap: "0.5rem", margin: "0.75rem 0", flexWrap: "wrap" }}>
+            <a
+              href="/sample_4meals_matrix_menu.xlsx"
+              download
+              className="btn btn-ghost"
+              style={{ fontSize: "0.84rem", textDecoration: "none" }}
+            >
+              📥 Download Sample Excel (.xlsx)
+            </a>
+            <a
+              href="/sample_4meals_matrix_menu.csv"
+              download
+              className="btn btn-ghost"
+              style={{ fontSize: "0.84rem", textDecoration: "none" }}
+            >
+              📥 Download Sample CSV (.csv)
+            </a>
+          </div>
           <form onSubmit={uploadCsv}>
-            <label className="label">Menu spreadsheet</label>
+            <label className="label">Menu Spreadsheet (.xlsx or .csv)</label>
             <FilePicker
-              accept=".csv"
+              accept=".csv,.xlsx,.xls"
               file={csvFile}
               onChange={setCsvFile}
-              chooseLabel="Select a CSV file"
-              emptySub="Upload matches docs/sample_menu.csv columns"
-              hint="Comma-separated values (.csv) only."
+              chooseLabel="Select an Excel or CSV file"
+              emptySub="Upload 4-meals matrix or legacy format"
+              hint="Excel (.xlsx/.xls) or Comma-separated (.csv)"
             />
+            <div style={{ marginTop: "0.75rem", maxWidth: "340px" }}>
+              <label className="label">Target Mess Type (if not specified in file)</label>
+              <select
+                className="input"
+                value={targetMessType}
+                onChange={(e) => setTargetMessType(e.target.value)}
+                style={{ marginTop: "0.25rem" }}
+              >
+                <option value="ALL">All Mess Types (Veg, Non-Veg, Special, Foodpark)</option>
+                <option value="VEG">Veg Mess Only</option>
+                <option value="NON_VEG">Non-Veg Mess Only</option>
+                <option value="SPECIAL">Special Mess Only</option>
+                <option value="FOODPARK">Foodpark Mess Only</option>
+              </select>
+            </div>
             <button
               className="btn"
               type="submit"
-              style={{ marginTop: "0.5rem" }}
+              style={{ marginTop: "0.85rem" }}
               disabled={importLoading}
             >
-              {importLoading ? "Uploading…" : "Upload"}
+              {importLoading ? "Uploading…" : "Upload Menu"}
             </button>
           </form>
           {importError && (

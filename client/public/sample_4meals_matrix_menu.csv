@@ -1,0 +1,8 @@
+Day,Mess_Type,Breakfast,Lunch,Snacks,Dinner
+Monday,VEG,"Masala Dosa, Sambar, Coconut Chutney, Filter Coffee","Paneer Butter Masala, Dal Tadka, Steamed Rice, Phulka, Curd","Samosa, Green Chutney, Masala Chai","Mixed Veg Kadai, Dal Fry, Jeera Rice, Chapati, Gulab Jamun"
+Tuesday,NON_VEG,"Boiled Eggs (2), Idli Sambar, Chutney, Tea","Chicken Curry, Dal Makhani, Steamed Rice, Roti, Green Salad","Chicken Roll / Veg Puff, Lemon Tea","Egg Curry, Dal Fry, Steamed Rice, Chapati, Fruit Custard"
+Wednesday,SPECIAL,"Poha, Boiled Sprout Salad, Bread Jam, Filter Coffee","Shahi Paneer, Dal Makhani, Veg Pulao, Butter Naan, Ice Cream","Pav Bhaji, Masala Tea","Kadhai Paneer, Yellow Dal, Steamed Rice, Tandoori Roti, Rasgulla"
+Thursday,FOODPARK,"Aloo Paratha, Curd, Pickle, Tea","Veg Manchurian, Fried Rice, Hakka Noodles, Crispy Corn","French Fries, Peri Peri Dip, Cold Coffee","Paneer Tikka Wrap, Garlic Naan, Dal Tadka, Jeera Rice, Brownie"
+Friday,VEG,"Idli Sambar, Medu Vada, Filter Coffee","Rajma Chawal, Boondi Raita, Roasted Papad, Phulka","Onion Pakoda, Masala Chai","Matar Paneer, Dal Tadka, Steamed Rice, Roti, Kheer"
+Saturday,NON_VEG,"Poori Bhaji, Tea","Butter Chicken, Dal Makhani, Biryani Rice, Butter Roti, Raita","Veg Cutlet, Tea","Chicken Kebab, Steamed Rice, Dal, Chapati, Ice Cream"
+Sunday,SPECIAL,"Chole Bhature, Sweet Lassi","Special Paneer Biryani, Mirchi Ka Salan, Raita, Gulab Jamun","Masala Sweet Corn, Cold Drink","Veg Kolhapuri, Dal Makhani, Steamed Rice, Paratha, Mango Kulfi"

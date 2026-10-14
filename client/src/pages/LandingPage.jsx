@@ -193,7 +193,7 @@ export default function LandingPage() {
               </div>
               <h3 className={styles.featureTitle}>Roles that fit reality</h3>
               <p className={styles.featureDesc}>
-                Tailored dashboards for students, mess in-charge, and admin — same data, right lens.
+                Tailored dashboards for students, parents, mess in-charge, and admin — same data, right lens.
               </p>
             </article>
           </div>
@@ -206,7 +206,7 @@ export default function LandingPage() {
           <p className={styles.sectionLead}>Built for demos, hackathons, and production-minded teams.</p>
           <div className={styles.stats}>
             <div className={styles.statCard}>
-              <div className={styles.statValue}>3</div>
+              <div className={styles.statValue}>4</div>
               <div className={styles.statLabel}>Role dashboards</div>
             </div>
             <div className={styles.statCard}>

@@ -26,6 +26,7 @@ import advancedRequestsRoutes from "./routes/advancedRequests.js";
 import messSwapRoutes from "./routes/messSwap.js";
 import messSwapAdminRoutes from "./routes/messSwapAdmin.js";
 import attendanceRoutes from "./routes/attendance.js";
+import parentRoutes from "./routes/parent.js";
 import { startAttendanceCron } from "./cron/attendanceCron.js";
 
 const app = express();
@@ -61,6 +62,7 @@ app.use("/api/calories", caloriesRoutes);
 app.use("/api/advanced-requests", advancedRequestsRoutes);
 app.use("/api/mess-swap", messSwapRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/parent", parentRoutes);
 
 app.use((req, res, next) => {
   if (!req.path.startsWith("/api")) return next();

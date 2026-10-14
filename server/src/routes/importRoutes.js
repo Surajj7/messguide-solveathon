@@ -29,7 +29,9 @@ router.post(
         await clearMenuData({ deleteMenuItems });
       }
 
-      const result = await importMenuCsv(req.file.buffer);
+      const result = await importMenuCsv(req.file.buffer, {
+        defaultMessType: req.body.targetMessType,
+      });
       res.json({
         ...result,
         clearedBeforeImport: clearExisting,

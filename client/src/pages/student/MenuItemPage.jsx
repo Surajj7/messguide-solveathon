@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { BackLink } from "../../components/BackLink.jsx";
 import FilePicker from "../../components/FilePicker.jsx";
 import api from "../../api/client.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 import styles from "./MenuItemPage.module.css";
 
 const ISSUES = [
@@ -19,15 +20,23 @@ export default function MenuItemPage() {
   const { itemId } = useParams();
   const [params] = useSearchParams();
   const date = params.get("date") || new Date().toISOString().slice(0, 10);
+  const { profile } = useAuth();
   const [item, setItem] = useState(null);
   const [rating, setRating] = useState(5);
   const [starHover, setStarHover] = useState(null);
   const [comment, setComment] = useState("");
   const [reviewFile, setReviewFile] = useState(null);
+  const [reviewCaterer, setReviewCaterer] = useState(profile?.caterer || "ZENITH");
+  const [reviewMessType, setReviewMessType] = useState(profile?.messType || "VEG");
   const [issue, setIssue] = useState("OTHER");
   const [detail, setDetail] = useState("");
   const [complaintFile, setComplaintFile] = useState(null);
   const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    if (profile?.caterer) setReviewCaterer(profile.caterer);
+    if (profile?.messType) setReviewMessType(profile.messType);
+  }, [profile]);
 
   useEffect(() => {
     api.get(`/menus/items/${itemId}`).then((r) => setItem(r.data));
@@ -40,10 +49,12 @@ export default function MenuItemPage() {
     fd.append("menuItemId", itemId);
     fd.append("menuDate", date);
     fd.append("rating", String(Number(rating)));
+    fd.append("caterer", reviewCaterer);
+    fd.append("messType", reviewMessType);
     if (comment) fd.append("comment", comment);
     if (reviewFile) fd.append("file", reviewFile);
     await api.post("/reviews", fd);
-    setMsg("Review saved.");
+    setMsg(`Review saved for ${reviewCaterer} (${reviewMessType.replace(/_/g, " ")}).`);
     setReviewFile(null);
   }
 
@@ -54,10 +65,12 @@ export default function MenuItemPage() {
     fd.append("menuItemId", itemId);
     fd.append("menuDate", date);
     fd.append("issueType", issue);
+    fd.append("caterer", reviewCaterer);
+    fd.append("messType", reviewMessType);
     if (detail) fd.append("description", detail);
     if (complaintFile) fd.append("file", complaintFile);
     await api.post("/complaints", fd);
-    setMsg("Complaint recorded.");
+    setMsg(`Complaint recorded for ${reviewCaterer} (${reviewMessType.replace(/_/g, " ")}).`);
     setComplaintFile(null);
   }
 
@@ -119,6 +132,38 @@ export default function MenuItemPage() {
         </p>
       </div>
       <form className="card" onSubmit={submitReview} encType="multipart/form-data">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "0.85rem", padding: "0.75rem", background: "rgba(255,255,255,0.03)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.06)" }}>
+          <div>
+            <label className="label" style={{ fontSize: "0.82rem", color: "#38bdf8" }}>Reviewing Caterer</label>
+            <select
+              className="input"
+              value={reviewCaterer}
+              onChange={(e) => setReviewCaterer(e.target.value)}
+              style={{ marginTop: "0.25rem" }}
+            >
+              <option value="ZENITH">Zenith</option>
+              <option value="PROODLE">Proodle</option>
+              <option value="FUSION">Fusion</option>
+              <option value="SRRC">SRRC</option>
+              <option value="CRCL">CRCL</option>
+            </select>
+          </div>
+          <div>
+            <label className="label" style={{ fontSize: "0.82rem", color: "#38bdf8" }}>Mess Type</label>
+            <select
+              className="input"
+              value={reviewMessType}
+              onChange={(e) => setReviewMessType(e.target.value)}
+              style={{ marginTop: "0.25rem" }}
+            >
+              <option value="VEG">Veg Mess</option>
+              <option value="NON_VEG">Non-Veg Mess</option>
+              <option value="SPECIAL">Special Mess</option>
+              <option value="FOODPARK">Foodpark Mess</option>
+            </select>
+          </div>
+        </div>
+
         <label className="label" id="rating-label">
           Rating
         </label>

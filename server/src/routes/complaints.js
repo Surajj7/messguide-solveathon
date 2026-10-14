@@ -28,6 +28,11 @@ router.post(
       const d = new Date(menuDate);
       d.setHours(0, 0, 0, 0);
       const attachmentPath = req.file ? publicUploadPath(req.file.filename) : null;
+      const profile = await prisma.studentProfile.findUnique({
+        where: { userId: req.userId },
+      });
+      const messType = req.body.messType || profile?.messType || null;
+      const caterer = req.body.caterer || profile?.caterer || null;
       const complaint = await prisma.complaint.create({
         data: {
           userId: req.userId,
@@ -36,6 +41,8 @@ router.post(
           issueType,
           description: description || null,
           attachmentPath,
+          messType,
+          caterer,
         },
       });
 

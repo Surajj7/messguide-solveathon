@@ -12,12 +12,14 @@ enum UserRole {
   STUDENT
   MESS_INCHARGE
   ADMIN
+  PARENT
 }
 
 enum MessType {
   VEG
   NON_VEG
   SPECIAL
+  FOODPARK
 }
 
 enum HostelBlock {
@@ -36,6 +38,7 @@ enum Caterer {
   RASSENCE
   PROODLE
   FUSION
+  CRCL
 }
 
 enum HealthGoal {
@@ -193,6 +196,8 @@ model User {
   mealAttendanceRows     MealAttendance[]      @relation("AttendanceStudent")
   mealAttendanceMarked   MealAttendance[]      @relation("AttendanceMarkedBy")
   mealAttendanceOtps     MealAttendanceOtp[]
+  parentProfile          ParentProfile?        @relation("ParentUser")
+  parentOf               ParentProfile[]       @relation("StudentParent")
 }
 
 model StudentProfile {
@@ -267,10 +272,13 @@ model Review {
   rating         Int
   comment        String?  @db.Text
   attachmentPath String?
+  messType       MessType?
+  caterer        Caterer?
   createdAt      DateTime @default(now())
 
   @@index([menuItemId, menuDate])
   @@index([userId])
+  @@index([messType, caterer])
 }
 
 model Complaint {
@@ -285,11 +293,29 @@ model Complaint {
   attachmentPath String?
   status         ComplaintStatus @default(OPEN)
   escalated      Boolean         @default(false)
+  messType       MessType?
+  caterer        Caterer?
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
 
   @@index([menuDate, escalated])
   @@index([menuItemId])
+  @@index([messType, caterer])
+}
+
+model ParentProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation("ParentUser", fields: [userId], references: [id], onDelete: Cascade)
+  studentId    String?
+  student      User?    @relation("StudentParent", fields: [studentId], references: [id], onDelete: SetNull)
+  studentRegNo String?
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([studentRegNo])
 }
 
 model Suggestion {

@@ -129,6 +129,7 @@ export default function AdminDashboard() {
   const [menuFile, setMenuFile] = useState(null);
   const [clearMenuFirst, setClearMenuFirst] = useState(false);
   const [deleteMenuCatalog, setDeleteMenuCatalog] = useState(false);
+  const [targetMessType, setTargetMessType] = useState("ALL");
   const [menuImportResult, setMenuImportResult] = useState(null);
   const [menuImportError, setMenuImportError] = useState(null);
   const [menuImportLoading, setMenuImportLoading] = useState(false);
@@ -254,6 +255,7 @@ export default function AdminDashboard() {
       fd.append("file", menuFile);
       fd.append("clearExisting", clearMenuFirst ? "true" : "false");
       fd.append("deleteMenuItems", deleteMenuCatalog ? "true" : "false");
+      if (targetMessType) fd.append("targetMessType", targetMessType);
       const { data } = await api.post("/import/csv", fd);
       setMenuImportResult(data);
     } catch (err) {
@@ -503,23 +505,54 @@ export default function AdminDashboard() {
 
       {tab === "menu" && (
         <section className="card">
-          <h2>Menu CSV import</h2>
+          <h2>Menu Excel &amp; CSV Import</h2>
           <p className="muted" style={{ fontSize: "0.88rem" }}>
-            Same format as <code>docs/sample_menu.csv</code>. Large files are supported. You can clear
-            existing schedule data before import, or clear only (no file) using the button below. Use
-            the night mess section for <code>NIGHT_MESS</code> CSV only.
+            Upload weekly or daily schedules. Supports <strong>4-meals matrix format</strong> (each day as a row with <strong>Breakfast, Lunch, Snacks, Dinner</strong> as columns). Both Excel (<code>.xlsx</code>) and <code>.csv</code> files are supported!
           </p>
+          <div style={{ display: "flex", gap: "0.5rem", margin: "0.75rem 0", flexWrap: "wrap" }}>
+            <a
+              href="/sample_4meals_matrix_menu.xlsx"
+              download
+              className="btn btn-ghost"
+              style={{ fontSize: "0.84rem", textDecoration: "none" }}
+            >
+              📥 Download Sample Excel (.xlsx)
+            </a>
+            <a
+              href="/sample_4meals_matrix_menu.csv"
+              download
+              className="btn btn-ghost"
+              style={{ fontSize: "0.84rem", textDecoration: "none" }}
+            >
+              📥 Download Sample CSV (.csv)
+            </a>
+          </div>
           <form onSubmit={uploadMenuCsv} className={styles.form}>
-            <label className="label">CSV file</label>
+            <label className="label">Menu Spreadsheet (.xlsx or .csv)</label>
             <FilePicker
-              accept=".csv"
+              accept=".csv,.xlsx,.xls"
               file={menuFile}
               onChange={setMenuFile}
-              chooseLabel="Select menu CSV"
-              emptySub="Same columns as docs/sample_menu.csv"
-              hint="Large files are supported."
+              chooseLabel="Select menu Excel / CSV file"
+              emptySub="Upload 4-meals matrix or legacy format"
+              hint="Excel (.xlsx/.xls) or Comma-separated (.csv)"
             />
-            <label className={styles.checkRow}>
+            <div style={{ marginTop: "0.75rem", maxWidth: "340px" }}>
+              <label className="label">Target Mess Type (if not specified in file)</label>
+              <select
+                className="input"
+                value={targetMessType}
+                onChange={(e) => setTargetMessType(e.target.value)}
+                style={{ marginTop: "0.25rem" }}
+              >
+                <option value="ALL">All Mess Types (Veg, Non-Veg, Special, Foodpark)</option>
+                <option value="VEG">Veg Mess Only</option>
+                <option value="NON_VEG">Non-Veg Mess Only</option>
+                <option value="SPECIAL">Special Mess Only</option>
+                <option value="FOODPARK">Foodpark Mess Only</option>
+              </select>
+            </div>
+            <label className={styles.checkRow} style={{ marginTop: "0.5rem" }}>
               <input
                 type="checkbox"
                 checked={clearMenuFirst}
@@ -537,7 +570,7 @@ export default function AdminDashboard() {
               complaints tied to those dishes — use when replacing the full menu from CSV.
             </label>
             <button className="btn" type="submit" disabled={menuImportLoading}>
-              {menuImportLoading ? "Importing…" : "Upload CSV"}
+              {menuImportLoading ? "Importing…" : "Upload Menu"}
             </button>
           </form>
           <div style={{ marginTop: "0.75rem" }}>
