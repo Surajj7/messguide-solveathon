@@ -12,6 +12,7 @@ import {
   IoClipboardOutline,
   IoSwapHorizontal,
   IoQrCodeOutline,
+  IoThumbsUpOutline,
 } from "react-icons/io5";
 import {
   BarChart,
@@ -31,6 +32,7 @@ import AppShellLayout from "../../layouts/AppShellLayout.jsx";
 import styles from "./AdminDashboard.module.css";
 import AdminMessSwapPanel from "./AdminMessSwapPanel.jsx";
 import AdminAttendancePanel from "./AdminAttendancePanel.jsx";
+import AdminVotingPlannerPanel from "./AdminVotingPlannerPanel.jsx";
 
 const ADMIN_DRAWER = [
   {
@@ -47,6 +49,12 @@ const ADMIN_DRAWER = [
   {
     title: "Manage",
     items: [
+      {
+        id: "voting",
+        label: "Menu voting & planner",
+        sub: "Polls, results & monthly calendar",
+        icon: IoThumbsUpOutline,
+      },
       { id: "users", label: "Users", sub: "Create accounts & roles", icon: IoPeopleOutline },
       { id: "menu", label: "Menu import", sub: "Menu, night mess CSV & clear", icon: IoDocumentTextOutline },
       {
@@ -93,6 +101,7 @@ const ADMIN_DRAWER = [
 
 const ADMIN_BOTTOM = [
   { id: "overview", label: "Home", icon: IoGridOutline },
+  { id: "voting", label: "Voting", icon: IoThumbsUpOutline },
   { id: "users", label: "Users", icon: IoPeopleOutline },
   { id: "menu", label: "Menu", icon: IoDocumentTextOutline },
   { id: "nightMess", label: "Night", icon: IoMoonOutline },
@@ -805,6 +814,8 @@ export default function AdminDashboard() {
           ))}
         </section>
       )}
+
+      {tab === "voting" && <AdminVotingPlannerPanel />}
       </div>
     </AppShellLayout>
   );

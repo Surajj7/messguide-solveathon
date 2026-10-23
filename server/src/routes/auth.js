@@ -79,6 +79,20 @@ router.post("/login", async (req, res, next) => {
       profile = await prisma.studentProfile.findUnique({
         where: { userId: user.id },
       });
+    } else if (user.role === "PARENT") {
+      profile = await prisma.parentProfile.findUnique({
+        where: { userId: user.id },
+        include: {
+          student: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              studentProfile: true,
+            },
+          },
+        },
+      });
     }
     res.json({
       token,
@@ -105,6 +119,18 @@ router.get("/me", authRequired, async (req, res, next) => {
         name: true,
         role: true,
         studentProfile: true,
+        parentProfile: {
+          include: {
+            student: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                studentProfile: true,
+              },
+            },
+          },
+        },
       },
     });
     if (!user) return res.status(404).json({ error: "Not found" });

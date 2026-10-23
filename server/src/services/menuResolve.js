@@ -1,9 +1,15 @@
 import { prisma } from "../lib/prisma.js";
 
 function startOfDay(d) {
+  if (typeof d === "string") {
+    const s = d.slice(0, 10);
+    return new Date(s + "T00:00:00.000Z");
+  }
   const x = new Date(d);
-  x.setHours(0, 0, 0, 0);
-  return x;
+  const y = x.getFullYear();
+  const m = String(x.getMonth() + 1).padStart(2, "0");
+  const day = String(x.getDate()).padStart(2, "0");
+  return new Date(`${y}-${m}-${day}T00:00:00.000Z`);
 }
 
 /**
@@ -11,10 +17,15 @@ function startOfDay(d) {
  */
 export async function getMenuForDate(dateInput, messType) {
   const d = startOfDay(dateInput);
-  const dayOfWeek = d.getDay();
+  const localD = new Date(dateInput);
+  localD.setHours(0, 0, 0, 0);
+  const dayOfWeek = d.getUTCDay();
 
   const dateEntries = await prisma.menuDateEntry.findMany({
-    where: { menuDate: d, messType },
+    where: {
+      OR: [{ menuDate: d }, { menuDate: localD }],
+      messType,
+    },
     include: { menuItem: true },
     orderBy: [{ mealSlot: "asc" }, { sortOrder: "asc" }],
   });

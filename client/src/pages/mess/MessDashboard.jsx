@@ -12,6 +12,7 @@ import {
   IoChatbubblesOutline,
   IoClipboardOutline,
   IoQrCodeOutline,
+  IoThumbsUpOutline,
 } from "react-icons/io5";
 import api from "../../api/client.js";
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -20,6 +21,7 @@ import FilePicker from "../../components/FilePicker.jsx";
 import CommunityFeed from "../../components/CommunityFeed.jsx";
 import NightMessStaffPanel from "../../components/NightMessStaffPanel.jsx";
 import MessAttendanceTab from "../../components/MessAttendanceTab.jsx";
+import MessVotingPanel from "./MessVotingPanel.jsx";
 import {
   LineChart,
   Line,
@@ -38,6 +40,12 @@ const MESS_DRAWER = [
   {
     title: "Data & feedback",
     items: [
+      {
+        id: "voting",
+        label: "Menu voting",
+        sub: "Live candidates & CSV",
+        icon: IoThumbsUpOutline,
+      },
       {
         id: "import",
         label: "CSV import",
@@ -78,6 +86,7 @@ const MESS_DRAWER = [
 ];
 
 const MESS_BOTTOM = [
+  { id: "voting", label: "Voting", icon: IoThumbsUpOutline },
   { id: "import", label: "Import", icon: IoCloudUploadOutline },
   { id: "reviews", label: "Reviews", icon: IoStarOutline },
   { id: "complaints", label: "Issues", icon: IoWarningOutline },
@@ -986,6 +995,8 @@ export default function MessDashboard() {
           </button>
         </form>
       )}
+
+      {tab === "voting" && <MessVotingPanel />}
 
       </div>
     </AppShellLayout>

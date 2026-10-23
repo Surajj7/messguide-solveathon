@@ -97,7 +97,7 @@ def setup_environment():
     try:
         log("Ensuring Prisma Client is generated...", color=CYAN)
         subprocess.run(
-            [sys.executable, "-c", "import os; os.chdir(r'" + str(SERVER_DIR) + "'); subprocess.run(['node', 'prisma/gen.js'])"],
+            ["node", "prisma/gen.js"],
             cwd=str(SERVER_DIR),
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,

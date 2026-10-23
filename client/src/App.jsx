@@ -25,6 +25,7 @@ import StudentAttendancePage from "./pages/student/StudentAttendancePage.jsx";
 import MessDashboard from "./pages/mess/MessDashboard.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import ParentDashboard from "./pages/parent/ParentDashboard.jsx";
+import StudentVotingPage from "./pages/student/StudentVotingPage.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 
 function PrivateRoute({ children, roles }) {
@@ -107,6 +108,7 @@ export default function App() {
           <Route path="history" element={<MessSwapHistoryPage />} />
         </Route>
         <Route path="attendance" element={<StudentAttendancePage />} />
+        <Route path="voting" element={<StudentVotingPage />} />
       </Route>
 
       <Route

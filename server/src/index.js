@@ -27,6 +27,9 @@ import messSwapRoutes from "./routes/messSwap.js";
 import messSwapAdminRoutes from "./routes/messSwapAdmin.js";
 import attendanceRoutes from "./routes/attendance.js";
 import parentRoutes from "./routes/parent.js";
+import menuPollsRoutes from "./routes/menuPolls.js";
+import dishSuggestionsRoutes from "./routes/dishSuggestions.js";
+import monthlyPlannerRoutes from "./routes/monthlyPlanner.js";
 import { startAttendanceCron } from "./cron/attendanceCron.js";
 
 const app = express();
@@ -63,6 +66,9 @@ app.use("/api/advanced-requests", advancedRequestsRoutes);
 app.use("/api/mess-swap", messSwapRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/parent", parentRoutes);
+app.use("/api/menu-polls", menuPollsRoutes);
+app.use("/api/dish-suggestions", dishSuggestionsRoutes);
+app.use("/api/monthly-planner", monthlyPlannerRoutes);
 
 app.use((req, res, next) => {
   if (!req.path.startsWith("/api")) return next();

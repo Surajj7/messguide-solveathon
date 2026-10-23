@@ -103,6 +103,8 @@ enum NotificationType {
   MEAL_CLOSING_SOON
   MISSED_MEALS_STREAK
   ATTENDANCE_CONFIRMED
+  POLL_UPDATE
+  MENU_PUBLISHED
 }
 
 enum AttendanceStatus {
@@ -198,6 +200,11 @@ model User {
   mealAttendanceOtps     MealAttendanceOtp[]
   parentProfile          ParentProfile?        @relation("ParentUser")
   parentOf               ParentProfile[]       @relation("StudentParent")
+  managerProfile          MessManagerProfile?   @relation("ManagerUser")
+  pollBallots             MenuPollBallot[]
+  dishSuggestions         DishSuggestion[]
+  pollAudits              MenuPollAudit[]
+  moderatedDishSuggestions DishSuggestion[]     @relation("SuggestionModerator")
 }
 
 model StudentProfile {
@@ -236,6 +243,8 @@ model MenuItem {
   complaints      Complaint[]
   calorieEntries  CalorieEntry[]
   leftoverEntries LeftoverEntry[]
+  pollCandidates   MenuPollCandidate[]
+  monthlyPlanItems MonthlyMenuPlanItem[]
 }
 
 model MenuTemplateEntry {
@@ -584,3 +593,261 @@ model MealAttendance {
   @@unique([userId, logDate, mealSlot])
   @@index([logDate, mealSlot, status])
 }
+
+enum PollStatus {
+  DRAFT
+  SCHEDULED
+  OPEN
+  PAUSED
+  CLOSED
+  ARCHIVED
+  CANCELLED
+}
+
+enum CandidateStatus {
+  APPROVED
+  PENDING_APPROVAL
+  REJECTED
+}
+
+enum DishSuggestionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DUPLICATE
+}
+
+enum PlanStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum WeekConvention {
+  CALENDAR_WEEKS
+  SEQUENTIAL_7_DAYS
+}
+
+enum FairnessPolicy {
+  EXTEND_DEADLINE
+  LATE_ENTRY_FLAG
+  NONE
+}
+
+enum TieBreakerPolicy {
+  ADMIN_REVIEW
+  HIGHER_NUTRITION
+  EARLIER_ENTRY
+}
+
+model MessManagerProfile {
+  id                   String     @id @default(uuid())
+  userId               String     @unique
+  user                 User       @relation("ManagerUser", fields: [userId], references: [id], onDelete: Cascade)
+  messTypes            MessType[]
+  caterer              Caterer?
+  canAddLiveCandidates Boolean    @default(false)
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+}
+
+model MenuPoll {
+  id                          String           @id @default(uuid())
+  name                        String
+  description                 String?          @db.Text
+  targetMonth                 Int              // 1 - 12
+  targetYear                  Int              // e.g. 2026
+  status                      PollStatus       @default(DRAFT)
+  startDate                   DateTime
+  endDate                     DateTime
+  messTypes                   MessType[]
+  maxSelectionsPerCategory    Int              @default(3)
+  allowBallotEdit             Boolean          @default(true)
+  showLiveResults             Boolean          @default(false)
+  allowLiveCandidateAdditions Boolean          @default(false)
+  requireCandidateApproval    Boolean          @default(true)
+  fairnessPolicy              FairnessPolicy   @default(LATE_ENTRY_FLAG)
+  tieBreakerPolicy            TieBreakerPolicy @default(ADMIN_REVIEW)
+  weekNumbering               WeekConvention   @default(CALENDAR_WEEKS)
+  cancellationReason          String?          @db.Text
+  frozenResults               String?          @db.Text
+  createdById                 String?
+  createdAt                   DateTime         @default(now())
+  updatedAt                   DateTime         @updatedAt
+
+  categories                  MenuPollCategory[]
+  candidates                  MenuPollCandidate[]
+  ballots                     MenuPollBallot[]
+  plans                       MonthlyMenuPlan[]
+  audits                      MenuPollAudit[]
+
+  @@index([status, startDate, endDate])
+  @@index([targetYear, targetMonth])
+}
+
+model MenuPollCategory {
+  id            String              @id @default(uuid())
+  pollId        String
+  poll          MenuPoll            @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  name          String
+  mealSlot      MealSlot
+  maxSelections Int                 @default(3)
+  displayOrder  Int                 @default(0)
+  createdAt     DateTime            @default(now())
+
+  candidates    MenuPollCandidate[]
+  ballots       MenuPollBallot[]
+
+  @@index([pollId, mealSlot])
+}
+
+model MenuPollCandidate {
+  id                 String             @id @default(uuid())
+  pollId             String
+  poll               MenuPoll           @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  categoryId         String
+  category           MenuPollCategory   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  menuItemId         String?
+  menuItem           MenuItem?          @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  dishName           String
+  messType           MessType
+  mealSlot           MealSlot
+  description        String?            @db.Text
+  calories           Float              @default(0)
+  proteinG           Float              @default(0)
+  carbsG             Float              @default(0)
+  fatsG              Float              @default(0)
+  allergens          String?
+  dietaryTags        String             @default("[]")
+  isAvailable        Boolean            @default(true)
+  isLiveAddition     Boolean            @default(false)
+  status             CandidateStatus    @default(APPROVED)
+  submittedByRole    UserRole           @default(ADMIN)
+  submittedByUserId  String?
+  rejectionReason    String?            @db.Text
+  version            Int                @default(1)
+  amendmentReason    String?            @db.Text
+  voteCount          Int                @default(0)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  selections         MenuPollBallotSelection[]
+  audits             MenuPollAudit[]
+
+  @@index([pollId, categoryId, status])
+  @@index([pollId, messType, mealSlot])
+}
+
+model MenuPollBallot {
+  id          String                    @id @default(uuid())
+  pollId      String
+  poll        MenuPoll                  @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    MenuPollCategory          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @updatedAt
+
+  selections  MenuPollBallotSelection[]
+
+  @@unique([pollId, userId, categoryId])
+  @@index([pollId, categoryId])
+  @@index([userId])
+}
+
+model MenuPollBallotSelection {
+  id          String            @id @default(uuid())
+  ballotId    String
+  ballot      MenuPollBallot    @relation(fields: [ballotId], references: [id], onDelete: Cascade)
+  candidateId String
+  candidate   MenuPollCandidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+
+  @@unique([ballotId, candidateId])
+  @@index([candidateId])
+}
+
+model DishSuggestion {
+  id                String               @id @default(uuid())
+  userId            String
+  user              User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dishName          String
+  mealSlot          MealSlot?
+  messType          MessType?
+  description       String?              @db.Text
+  reason            String?              @db.Text
+  status            DishSuggestionStatus @default(PENDING)
+  moderatedById     String?
+  moderatedBy       User?                @relation("SuggestionModerator", fields: [moderatedById], references: [id], onDelete: SetNull)
+  moderationReason  String?              @db.Text
+  moderatedAt       DateTime?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  @@index([userId, status])
+  @@index([status, createdAt])
+}
+
+model MonthlyMenuPlan {
+  id             String                @id @default(uuid())
+  pollId         String?
+  poll           MenuPoll?             @relation(fields: [pollId], references: [id], onDelete: SetNull)
+  name           String
+  targetMonth    Int
+  targetYear     Int
+  messTypes      MessType[]
+  weekConvention WeekConvention        @default(CALENDAR_WEEKS)
+  status         PlanStatus            @default(DRAFT)
+  publishedAt    DateTime?
+  publishedById  String?
+  version        Int                   @default(1)
+  notes          String?               @db.Text
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  items          MonthlyMenuPlanItem[]
+
+  @@index([targetYear, targetMonth, status])
+}
+
+model MonthlyMenuPlanItem {
+  id                String          @id @default(uuid())
+  planId            String
+  plan              MonthlyMenuPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  date              DateTime        @db.Date
+  dayOfWeek         Int
+  weekNumber        Int
+  messType          MessType
+  mealSlot          MealSlot
+  menuItemId        String?
+  menuItem          MenuItem?       @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+  dishName          String
+  isLocked          Boolean         @default(false)
+  sourceVoteCount   Int             @default(0)
+  nutritionSnapshot String?
+  sortOrder         Int             @default(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([planId, date, messType, mealSlot])
+  @@index([date, messType])
+}
+
+model MenuPollAudit {
+  id          String             @id @default(uuid())
+  pollId      String?
+  poll        MenuPoll?          @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  candidateId String?
+  candidate   MenuPollCandidate? @relation(fields: [candidateId], references: [id], onDelete: SetNull)
+  actorId     String
+  actor       User               @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  actorRole   UserRole
+  action      String
+  details     String?            @db.Text
+  createdAt   DateTime           @default(now())
+
+  @@index([pollId, createdAt])
+  @@index([actorId])
+}
+

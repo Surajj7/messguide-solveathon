@@ -17,6 +17,7 @@ import {
   IoClipboardOutline,
   IoSwapHorizontal,
   IoQrCodeOutline,
+  IoThumbsUpOutline,
 } from "react-icons/io5";
 import api from "../api/client.js";
 import styles from "./StudentLayout.module.css";
@@ -33,6 +34,7 @@ const drawerSections = [
     title: "Explore",
     items: [
       { to: "/app", end: true, label: "Home", sub: "Dashboard & today’s meals", icon: IoHomeOutline },
+      { to: "/app/voting", label: "Menu voting", sub: "Vote dishes for next month", icon: IoThumbsUpOutline },
       { to: "/app/menu", label: "Daily feedback", sub: "Rate dishes & menu", icon: IoRestaurantOutline },
       { to: "/app/calendar", label: "Calendar", sub: "Plan ahead", icon: IoCalendarOutline },
       { to: "/app/calories", label: "Calorie tracker", sub: "Log what you eat", icon: IoStatsChartOutline },

@@ -202,6 +202,13 @@ async function main() {
       studentRegNo: "23BCE1004",
       phone: "+91-9876543213",
     },
+    {
+      email: "parent.soham@vitparent.ac.in",
+      name: "Soham's Parent",
+      studentEmail: "boina.soham2024@vitstudent.ac.in",
+      studentRegNo: "24BCE1099",
+      phone: "+91-9876500001",
+    },
   ];
 
   for (const p of parentsData) {

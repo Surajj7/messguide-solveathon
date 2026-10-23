@@ -1,4 +1,3 @@
-import * as xlsx from "xlsx";
 import { parse } from "csv-parse/sync";
 import { prisma } from "../lib/prisma.js";
 
